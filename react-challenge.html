@@ -26,38 +26,41 @@
             setMood: ""
           }
         }
-
+//I made currentMood to have this.state in front of it - this then gave the function access to the current mood starting point
+//I made the same change to moods.length
+//I mde the same change on line 34 as I did on line 33, I also added in set mood
         nextMood = () => {
-          if(currentMood === moods.length - 1){
-            this.setState({ currentMood: currentMood = 0 })
+          if(this.state.currentMood === this.state.moods.length - 1) {
+            this.setState({ currentMood: this.state.currentMood = 0 ,
+            setMood: ""})
+//I made the second current mood within line 38 to have this.state in front of it too and added setMood with ""
           } else {
-            this.setState({ currentMood: currentMood + 1 })
+            this.setState({ currentMood: this.state.currentMood + 1,
+            setMood: ""})
           }
         }
-
+//rather than on line 44 it saying this.state.currentMood, I made it to this.nextMood
         setThisMood = () => {
-          this.setState({ setMood: this.state.moods[this.state.currentMood] })
+          this.setState({ setMood: this.state.moods[this.state.nextMood] })
         }
-
+//I got rid of all the mood meter stuff completely - and put everything within the button that was necessary to keep
         render(){
           return(
             <div>
-              <MoodMeter
-                moodOptions={ this.state.moods[this.state.currentMood] }
-                next={ this.nextMood }
-                setThisMood={ this.setThisMood }
-                set={ this.state.setMood }
-              />
+              <button onClick={this.nextMood}> {this.state.moods}</button>
+              {this.state.moods[this.state.currentMood]}
+              MoodMeter
             </div>
           )
         }
       }
 
+
       class Header extends React.Component{
         render(){
           return(
             <div>
-              <h1>Welcome to the Mood Meter App</h1>
+              <h1>Welcome to the Mood Meter App!</h1>
             </div>
           )
         }
@@ -66,15 +69,18 @@
       class MoodMeter extends React.Component{
         render(){
           return(
+          <div>
+              <h1>Welcome to the Mood Meter App!</h1>
               <h3>Mood Options:</h3>
               <p style={{fontSize: "40px"}}>{ this.props.moodOptions }</p>
-              <button onClick={ }>Click Here For Next Mood Option</button>
+              <button onClick={this.nextMood}> {this.state.moods} Click Here For Next Mood Option</button>
               <br />
               <br />
               <h3>Save your mood here!</h3>
               <button onClick={ this.props.setThisMood }>Yup, this is me right now.</button>
               <h3>My mood:</h3>
               <p style={{fontSize: "40px"}}>{ this.props.set }</p>
+          </div>
           )
         }
       }
